@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>月影桌宠</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="pet-stage" aria-label="月影桌宠">
+      <div class="speech" role="status" aria-live="polite"></div>
+      <section class="model-chat" id="model-chat" hidden role="dialog" aria-modal="false" aria-labelledby="model-chat-title">
+        <header class="model-chat-header">
+          <div>
+            <p class="model-chat-kicker">模型回答</p>
+            <h2 id="model-chat-title">gpt-4o-mini</h2>
+          </div>
+          <button class="close-button model-chat-close" id="model-chat-close" type="button" aria-label="关闭模型回答">×</button>
+        </header>
+        <p class="model-chat-question" id="model-chat-question"></p>
+        <div class="model-chat-answer" id="model-chat-answer" role="status" aria-live="polite"></div>
+      </section>
+      <div class="pet-wrap">
+        <div class="art-frame">
+          <img class="pet" src="../assets/character-transparent.png" alt="银白长发、淡紫色眼睛、白色角与蝠翼的月影桌宠" draggable="false" tabindex="0" />
+        </div>
+        <button class="cloud" type="button" aria-label="和小云朵互动"><span></span><span></span><span></span></button>
+      </div>
+      <div class="sparkles" aria-hidden="true"></div>
+      <form class="chat-input" id="chat-form">
+        <input id="chat-input" name="message" type="text" maxlength="500" autocomplete="off" placeholder="在这里问她……" aria-label="输入要对桌宠说的话" />
+        <button id="chat-send" type="submit" aria-label="发送消息">发送</button>
+      </form>
+      <div class="status">右键打开菜单</div>
+    </main>
+    <div class="settings-backdrop" id="settings-backdrop" hidden>
+      <section class="settings-dialog" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+        <div class="settings-heading">
+          <div>
+            <p class="settings-kicker">月影桌宠</p>
+            <h1 id="settings-title">模型设置</h1>
+          </div>
+          <button class="close-button" id="settings-close" type="button" aria-label="关闭设置">×</button>
+        </div>
+        <p class="settings-help">支持 OpenAI 兼容的 Chat Completions 接口。密钥只在本机加密保存。</p>
+        <label>API 地址<input id="api-endpoint" type="url" spellcheck="false" /></label>
+        <label>模型名称
+          <span class="model-picker">
+            <select id="api-model" aria-label="选择模型"></select>
+            <button id="fetch-models" type="button">拉取模型</button>
+          </span>
+        </label>
+        <label>API 密钥<input id="api-key" type="password" autocomplete="new-password" placeholder="请输入密钥" /></label>
+        <label class="clear-key"><input id="clear-key" type="checkbox" /> 清除已保存的密钥</label>
+        <p class="settings-status" id="settings-status" role="status"></p>
+        <div class="settings-actions">
+          <button id="settings-cancel" type="button">取消</button>
+          <button class="primary-action" type="submit" form="settings-form">保存</button>
+        </div>
+        <form id="settings-form" class="settings-submit-proxy"></form>
+      </section>
+    </div>
+    <script src="./renderer.js"></script>
+  </body>
+</html>

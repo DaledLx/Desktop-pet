@@ -6,13 +6,13 @@
 
 ### 普通用户：Windows 便携版
 
-下载 `MoonlitPet-win-x64-*.zip`，先完整解压到普通文件夹，再双击 `MoonlitPet.exe`（也可双击同目录的 `启动桌宠.cmd`）。支持 Windows 10/11 x64，不需要安装 Node.js、npm 或 Electron，基础桌宠可离线启动。AI 对话仍需网络和用户自行配置 API。
+下载 `MoonlitPet-win-x64.zip`，先完整解压到普通文件夹，再双击 `MoonlitPet.exe`（也可双击同目录的 `启动桌宠.cmd`）。支持 Windows 10/11 x64，不需要安装 Node.js、npm 或 Electron，基础桌宠可离线启动。AI 对话仍需网络和用户自行配置 API。
 
 请保留整个目录：不要只复制 EXE，不要直接在 ZIP 预览里运行。退出请使用角色右键菜单或系统托盘的“退出桌宠”。程序启动不依赖终端，关闭启动窗口不会退出桌宠。
 
 ### 开发者：源码版
 
-源码 ZIP 不附带运行环境，需要先安装 Node.js LTS（建议 22 或更新版本）。在项目目录执行：
+源码不附带运行环境，需要先安装 Node.js LTS（建议 22 或更新版本）。在项目目录执行：
 
 ```powershell
 npm.cmd install

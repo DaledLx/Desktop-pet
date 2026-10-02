@@ -9,8 +9,7 @@ A lightweight Windows 10/11 Electron desktop pet inspired by the Moonlit Astra c
 - **Name:** Astra (Moonlit Astra)
 - **Style:** Silver-white hair, pale violet eyes, white horns, bat wings, a long tail, and a flowing white dress, with a small blue cloud by her side
 - **Personality:** Calm, gentle, and a little mysterious; she offers quiet companionship when you need a moment to rest
-- **Interactions:** Moonlight-themed lines when clicked, a special response and sparkles on double-click, a playful cloud interaction, and a subtle breathing animation
-## Features
+- **Interactions:** Moonlight-themed lines when clicked, a special response and sparkles on double-click, a playful cloud interaction, and a subtle breathing animation`r`n`r`n## Features
 
 - Transparent, borderless, always-on-top desktop window
 - Draggable character with subtle breathing animation
@@ -61,4 +60,5 @@ The app sends model requests from Electron's main process. It does not include a
 ## License
 
 See [LICENSE](LICENSE) for the project license and third-party notices.
+
 

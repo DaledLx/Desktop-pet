@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>月影桌宠</title>
+    <title>Claude 桌宠</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="pet-stage" aria-label="月影桌宠">
+    <main class="pet-stage" aria-label="Claude 桌宠">
       <div class="speech" role="status" aria-live="polite"></div>
       <section class="model-chat" id="model-chat" hidden role="dialog" aria-modal="false" aria-labelledby="model-chat-title">
         <header class="model-chat-header">
@@ -22,13 +22,13 @@
       </section>
       <div class="pet-wrap">
         <div class="art-frame">
-          <img class="pet" src="../assets/character-transparent.png" alt="银白长发、淡紫色眼睛、白色角与蝠翼的月影桌宠" draggable="false" tabindex="0" />
+          <img class="pet" src="../assets/claude-character.png" alt="橙色长发、琥珀色眼睛，穿奶油白黑橙长裙、手持书本的 Claude" draggable="false" tabindex="0" />
         </div>
-        <button class="cloud" type="button" aria-label="和小云朵互动"><span></span><span></span><span></span></button>
+        <button class="profile-button" id="profile-button" type="button" aria-label="查看 Claude 角色档案" title="角色档案"><span aria-hidden="true">▤</span><small>档案</small></button>
       </div>
       <div class="sparkles" aria-hidden="true"></div>
       <form class="chat-input" id="chat-form">
-        <input id="chat-input" name="message" type="text" maxlength="500" autocomplete="off" placeholder="在这里问她……" aria-label="输入要对桌宠说的话" />
+        <input id="chat-input" name="message" type="text" maxlength="500" autocomplete="off" placeholder="和 Claude 聊聊……" aria-label="输入要对桌宠说的话" />
         <button id="chat-send" type="submit" aria-label="发送消息">发送</button>
       </form>
       <div class="status">右键打开菜单</div>
@@ -37,12 +37,12 @@
       <section class="settings-dialog" role="dialog" aria-modal="true" aria-labelledby="settings-title">
         <div class="settings-heading">
           <div>
-            <p class="settings-kicker">月影桌宠</p>
+            <p class="settings-kicker">Claude 桌宠</p>
             <h1 id="settings-title">模型设置</h1>
           </div>
           <button class="close-button" id="settings-close" type="button" aria-label="关闭设置">×</button>
         </div>
-        <p class="settings-help">支持 OpenAI 兼容的 Chat Completions 接口。密钥只在本机加密保存。</p>
+        <p class="settings-help">支持 OpenAI 兼容的 Chat Completions / Responses 接口。角色与实际模型独立，密钥只在本机加密保存。</p>
         <label>API 地址<input id="api-endpoint" type="url" spellcheck="false" /></label>
         <label>模型名称
           <span class="model-picker">
@@ -60,6 +60,16 @@
         <form id="settings-form" class="settings-submit-proxy"></form>
       </section>
     </div>
+    <dialog class="character-profile" id="character-profile" aria-labelledby="profile-name">
+      <div class="settings-heading">
+        <div><p class="settings-kicker">角色档案 · 阅读与陪伴</p><h2 id="profile-name"></h2></div>
+        <button class="close-button" id="profile-close" type="button" aria-label="关闭角色档案" autofocus>×</button>
+      </div>
+      <p class="profile-subtitle" id="profile-subtitle"></p>
+      <dl><dt>外貌</dt><dd id="profile-appearance"></dd><dt>性格与爱好</dt><dd id="profile-personality"></dd></dl>
+      <p class="profile-tip">点击她聊一句，双击留下书签。拖动她，可以一起换个阅读角落。</p>
+    </dialog>
+    <script src="./character.js"></script>
     <script src="./renderer.js"></script>
   </body>
 </html>

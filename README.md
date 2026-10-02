@@ -9,7 +9,8 @@ A lightweight Windows 10/11 Electron desktop pet featuring a DeepSeek-inspired w
 - **Name:** DeepSeek
 - **Style:** A whale-girl with deep-blue hair, fin-like ears, and a whale tail, accompanied by a little whale
 - **Personality:** Thoughtful, straightforward, and curious; she takes time to reason things through, admits when she is unsure, and values useful answers
-- **Interactions:** Reflective lines when clicked, a special double-click response, a little whale interaction, and a subtle breathing animation`r`n`r`n## Features
+- **Interactions:** Reflective lines when clicked, a special double-click response, a little whale interaction, and a subtle breathing animation
+- ## Features
 
 - Transparent, borderless, always-on-top desktop window
 - Draggable character with subtle breathing animation

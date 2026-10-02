@@ -4,6 +4,12 @@
 
 A lightweight Windows 10/11 Electron desktop pet inspired by the Moonlit Astra character. Astra stays on top, uses a borderless transparent window, and can be dragged around the desktop. Click or double-click Astra for local lines and visual feedback; click the blue cloud for another interaction. Right-click Astra or use the system tray to open settings, toggle mouse passthrough, configure startup, or exit.
 
+## Character
+
+- **Name:** Astra (Moonlit Astra)
+- **Style:** Silver-white hair, pale violet eyes, white horns, bat wings, a long tail, and a flowing white dress, with a small blue cloud by her side
+- **Personality:** Calm, gentle, and a little mysterious; she offers quiet companionship when you need a moment to rest
+- **Interactions:** Moonlight-themed lines when clicked, a special response and sparkles on double-click, a playful cloud interaction, and a subtle breathing animation
 ## Features
 
 - Transparent, borderless, always-on-top desktop window
@@ -55,3 +61,4 @@ The app sends model requests from Electron's main process. It does not include a
 ## License
 
 See [LICENSE](LICENSE) for the project license and third-party notices.
+

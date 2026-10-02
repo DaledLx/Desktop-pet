@@ -24,7 +24,7 @@ The character profile, local lines, and AI persona are maintained in `src/charac
 
 ## Run the portable build
 
-Download the `ClaudePet-win-x64-*.zip` release, extract the complete archive to a normal folder, and launch `ClaudePet.exe` or `启动桌宠.cmd`. The portable build supports Windows 10/11 x64 and does not require Node.js, npm, or Electron. Keep the extracted folder together and do not run the executable from inside the ZIP preview.
+Download the `ClaudePet-win-x64.zip` release, extract the complete archive to a normal folder, and launch `ClaudePet.exe` or `启动桌宠.cmd`. The portable build supports Windows 10/11 x64 and does not require Node.js, npm, or Electron. Keep the extracted folder together and do not run the executable from inside the ZIP preview.
 
 ## Run from source
 

@@ -29,79 +29,6 @@ let mainWindow = null;
 let tray = null;
 let saveTimer = null;
 let chatPanelOpen = false;
-let speechWindow = null;
-let speechTimer = null;
-let speechText = '';
-let speechReady = false;
-
-function hideSpeech() {
-  clearTimeout(speechTimer);
-  speechText = '';
-  if (speechWindow && !speechWindow.isDestroyed()) speechWindow.hide();
-}
-
-function positionSpeech() {
-  if (!speechWindow || speechWindow.isDestroyed() || !mainWindow || mainWindow.isDestroyed()) return false;
-  const bounds = mainWindow.getBounds();
-  const area = screen.getDisplayMatching(bounds).workArea;
-  const width = 236;
-  const height = 116;
-  const gap = 10;
-  const right = area.x + area.width;
-  const bottom = area.y + area.height;
-  // Anchor to the character column, even when the AI panel expands to the left.
-  // Leave room for the breathing animation above the hair, never across the face.
-  const headTop = bounds.y + 16 + (chatPanelOpen ? 54 : 0);
-  const headCenter = bounds.x + bounds.width - getSizePreset().width / 2;
-  const x = Math.round(Math.max(area.x, Math.min(headCenter - width / 2, right - width)));
-  const y = Math.round(Math.max(area.y, Math.min(headTop - 24, bottom - height)));
-  const candidates = [
-    { x, y: headTop - height - 12 },
-    // When there is no space above, keep the bubble beside the head.
-    { x: bounds.x - width - gap, y },
-    { x: bounds.x + bounds.width + gap, y },
-    { x, y: bounds.y + bounds.height + gap },
-  ];
-  const position = candidates.find((p) => p.x >= area.x && p.y >= area.y && p.x + width <= right && p.y + height <= bottom);
-  if (!position) { speechWindow.hide(); return false; }
-  speechWindow.setBounds({ ...position, width, height });
-  if (speechReady && speechText && mainWindow.isVisible()) speechWindow.showInactive();
-  return true;
-}
-
-function showSpeech(text) {
-  if (typeof text !== 'string' || !text.trim() || text.length > 90) return;
-  speechText = text;
-  clearTimeout(speechTimer);
-  if (!speechWindow || speechWindow.isDestroyed()) {
-    speechReady = false;
-    speechWindow = new BrowserWindow({
-      width: 236, height: 116, parent: mainWindow, show: false,
-      frame: false, transparent: true, hasShadow: false, resizable: false,
-      skipTaskbar: true, focusable: false, alwaysOnTop: state.alwaysOnTop,
-      webPreferences: {
-        preload: path.join(__dirname, 'speech-preload.js'),
-        contextIsolation: true, nodeIntegration: false, sandbox: true,
-      },
-    });
-    speechWindow.setIgnoreMouseEvents(true);
-    speechWindow.webContents.once('did-finish-load', () => {
-      speechReady = true;
-      if (speechText) revealSpeech();
-    });
-    speechWindow.on('closed', () => { speechWindow = null; speechReady = false; });
-    speechWindow.loadFile(path.join(__dirname, 'speech.html'));
-  } else if (speechReady) {
-    revealSpeech();
-  }
-}
-
-function revealSpeech() {
-  if (!speechWindow || !speechText || !mainWindow?.isVisible()) return;
-  speechWindow.webContents.send('speech-text', speechText);
-  positionSpeech();
-  speechTimer = setTimeout(hideSpeech, 5600);
-}
 
 function statePath() {
   return path.join(app.getPath('userData'), 'settings.json');
@@ -153,13 +80,18 @@ function notifyState() {
 }
 
 function makeTrayIcon() {
-  return nativeImage.createFromPath(path.join(__dirname, '..', 'assets', 'claude-tray.png')).resize({ width: 32, height: 32 });
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+    <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dcd6ff"/><stop offset="1" stop-color="#8c7fd9"/></linearGradient></defs>
+    <path d="M32 6 39 17l13 3-9 10 2 14-13-6-13 6 2-14-9-10 13-3Z" fill="url(#g)" stroke="#514b83" stroke-width="2"/>
+    <circle cx="25" cy="31" r="3" fill="#514b83"/><circle cx="39" cy="31" r="3" fill="#514b83"/>
+    <path d="M25 40c4 3 10 3 14 0" fill="none" stroke="#514b83" stroke-width="2" stroke-linecap="round"/>
+  </svg>`;
+  return nativeImage.createFromDataURL(`data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`);
 }
 
 function setAlwaysOnTop(value) {
   state.alwaysOnTop = Boolean(value);
   if (mainWindow && !mainWindow.isDestroyed()) mainWindow.setAlwaysOnTop(state.alwaysOnTop, 'floating');
-  if (speechWindow && !speechWindow.isDestroyed()) speechWindow.setAlwaysOnTop(state.alwaysOnTop, 'floating');
   saveState();
   notifyState();
 }
@@ -318,7 +250,6 @@ function sizeMenuItems() {
 }
 
 function quitApp() {
-  hideSpeech();
   if (tray) tray.destroy();
   tray = null;
   app.quit();
@@ -419,20 +350,17 @@ function createWindow() {
     mainWindow.setIgnoreMouseEvents(state.ignoreMouseEvents, { forward: true });
   });
   mainWindow.on('move', () => {
-    positionSpeech();
     const position = mainWindow.getPosition();
     state.x = position[0];
     state.y = position[1];
     saveState();
   });
-  mainWindow.on('resize', positionSpeech);
-  mainWindow.on('hide', hideSpeech);
   mainWindow.on('closed', () => { mainWindow = null; });
 }
 
 function createTray() {
   tray = new Tray(makeTrayIcon());
-  tray.setToolTip('Claude · 克劳德桌宠');
+  tray.setToolTip('月影桌宠');
   tray.on('click', () => {
     if (!mainWindow || mainWindow.isDestroyed()) return;
     mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
@@ -441,9 +369,6 @@ function createTray() {
 }
 
 function registerIpc() {
-  ipcMain.on('show-speech', (event, text) => {
-    if (event.sender === mainWindow?.webContents) showSpeech(text);
-  });
   ipcMain.handle('get-state', () => publicState());
   ipcMain.handle('get-model-settings', () => publicState());
   ipcMain.handle('save-model-settings', (_event, payload) => setModelSettings(payload));

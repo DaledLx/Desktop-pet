@@ -1,12 +1,12 @@
 {
   "name": "moonlit-desktop-pet",
   "version": "1.0.0",
-  "description": "Claude-inspired desktop reading companion with warm local interactions and configurable AI chat.",
+  "description": "A gentle Windows desktop pet inspired by the supplied character reference.",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
     "dev": "electron .",
-    "check": "node --check src/main.js && node --check src/preload.js && node --check src/renderer.js && node --check src/model-client.js && node --check scripts/build-win.cjs && node --check src/character.js && node --check src/speech-preload.js",
+    "check": "node --check src/main.js && node --check src/preload.js && node --check src/renderer.js && node --check src/model-client.js && node --check scripts/build-win.cjs",
     "build:win": "npm run check && npm test && node scripts/build-win.cjs",
     "test": "node --test tests/*.test.js"
   },

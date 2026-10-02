@@ -1,14 +1,14 @@
-const lines = [
-  '今晚的月光很轻，愿它也落在你肩上。',
-  '别急，慢一点也没有关系。',
-  '我会在这里，替你守着这一小片安静。',
-  '云朵说，今天也要记得呼吸。',
-  '如果累了，就把心事交给夜色吧。',
-];
+const lines = character.lines;
 
 const pet = document.querySelector('.pet');
 const petStage = document.querySelector('.pet-stage');
-const cloud = document.querySelector('.cloud');
+const profileButton = document.querySelector('#profile-button');
+const profileDialog = document.querySelector('#character-profile');
+const profileClose = document.querySelector('#profile-close');
+document.querySelector('#profile-name').textContent = character.name;
+document.querySelector('#profile-subtitle').textContent = character.subtitle;
+document.querySelector('#profile-appearance').textContent = character.appearance;
+document.querySelector('#profile-personality').textContent = character.personality;
 const bubble = document.querySelector('.speech');
 const modelChat = document.querySelector('#model-chat');
 const modelChatClose = document.querySelector('#model-chat-close');
@@ -30,35 +30,27 @@ const apiModel = document.querySelector('#api-model');
 const fetchModelsButton = document.querySelector('#fetch-models');
 const apiKey = document.querySelector('#api-key');
 const clearKey = document.querySelector('#clear-key');
-let lineIndex = 0;
+let lineIndex = -1;
 let drag = null;
 let moved = false;
-let hideTimer = null;
 let doubleClickTimer = null;
 let isSending = false;
 let currentModelName = 'gpt-4o-mini';
 let conversation = [
   {
     role: 'system',
-    content: '你是月影桌宠。你有银白色长发、淡紫色眼睛、白色角、蝠翼和长尾，气质清冷温柔，身边有蓝色小云朵。请用简短、温柔、略带神秘感的中文回答，每次最多三段，不要声称自己能执行电脑操作。',
+    content: character.systemPrompt,
   },
 ];
 
 function showLine() {
   lineIndex = (lineIndex + 1) % lines.length;
-  bubble.textContent = lines[lineIndex];
-  bubble.classList.remove('visible');
-  requestAnimationFrame(() => bubble.classList.add('visible'));
-  clearTimeout(hideTimer);
-  hideTimer = setTimeout(() => bubble.classList.remove('visible'), 5600);
+  showCustomLine(lines[lineIndex]);
 }
 
 function showCustomLine(text) {
   bubble.textContent = text;
-  bubble.classList.remove('visible');
-  requestAnimationFrame(() => bubble.classList.add('visible'));
-  clearTimeout(hideTimer);
-  hideTimer = setTimeout(() => bubble.classList.remove('visible'), 5600);
+  window.desktopPet.showSpeech(text);
 }
 
 function showModelAnswer(question, answer) {
@@ -202,7 +194,7 @@ pet.addEventListener('dblclick', (event) => {
   clearTimeout(doubleClickTimer);
   pet.classList.remove('excited');
   requestAnimationFrame(() => pet.classList.add('excited'));
-  showCustomLine('被你发现了。今晚也一起看云吧。');
+  showCustomLine(character.doubleClickLine);
   sparkleBurst();
 });
 
@@ -213,13 +205,18 @@ pet.addEventListener('keydown', (event) => {
   sparkleBurst();
 });
 
-cloud.addEventListener('click', (event) => {
+profileButton.addEventListener('click', (event) => {
   event.stopPropagation();
-  cloud.classList.remove('puffed');
-  requestAnimationFrame(() => cloud.classList.add('puffed'));
-  showCustomLine('小云朵说：今天也要对自己温柔一点。');
-  sparkleBurst();
+  profileDialog.showModal();
 });
+profileClose.addEventListener('click', () => profileDialog.close());
+profileDialog.addEventListener('click', (event) => {
+  if (event.target === profileDialog) {
+    const bounds = profileDialog.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) profileDialog.close();
+  }
+});
+profileDialog.addEventListener('close', () => profileButton.focus());
 
 chatForm.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -228,11 +225,11 @@ chatForm.addEventListener('submit', async (event) => {
   chatInput.value = '';
   conversation.push({ role: 'user', content: question });
   setChatBusy(true);
-  showModelAnswer(question, '嗯……让我想一想。');
+  showModelAnswer(question, '让我理一理思路，再慢慢说给你听。');
   try {
     const answer = await window.desktopPet.askModel({ messages: conversation });
     conversation.push({ role: 'assistant', content: answer });
-    conversation = [conversation[0], ...conversation.slice(-10)];
+    conversation = [conversation[0], ...conversation.slice(1).slice(-10)];
     showModelAnswer(question, answer);
     sparkleBurst();
   } catch (error) {
@@ -271,7 +268,7 @@ settingsBackdrop.addEventListener('click', (event) => {
 });
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && !settingsBackdrop.hidden) closeSettings();
-  if (event.key === 'Escape' && !modelChat.hidden) closeModelAnswer();
+  if (event.key === 'Escape' && !profileDialog.open && !modelChat.hidden) closeModelAnswer();
 });
 
 document.addEventListener('contextmenu', (event) => {

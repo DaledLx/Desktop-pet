@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld('desktopPet', {
   saveModelSettings: (payload) => ipcRenderer.invoke('save-model-settings', payload),
   listModels: (payload) => ipcRenderer.invoke('list-models', payload),
   askModel: (payload) => ipcRenderer.invoke('ask-model', payload),
+  showSpeech: (text) => ipcRenderer.send('show-speech', text),
   setChatPanelOpen: (value) => ipcRenderer.send('set-chat-panel-open', Boolean(value)),
   onOpenModelSettings: (callback) => ipcRenderer.on('open-model-settings', (_event, state) => callback(state)),
   showContextMenu: () => ipcRenderer.send('show-context-menu'),

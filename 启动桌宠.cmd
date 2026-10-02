@@ -2,7 +2,7 @@
 setlocal
 cd /d "%~dp0"
 
-if exist "%~dp0MoonlitPet.exe" goto portable
+if exist "%~dp0ClaudePet.exe" goto portable
 if not exist "%~dp0package.json" goto incomplete
 set "ELECTRON_EXE=%~dp0node_modules\electron\dist\electron.exe"
 if exist "%ELECTRON_EXE%" goto source
@@ -16,7 +16,7 @@ goto runtimeMissing
 
 :portable
 set "ELECTRON_RUN_AS_NODE="
-start "" "%~dp0MoonlitPet.exe"
+start "" "%~dp0ClaudePet.exe"
 if errorlevel 1 goto launchFailed
 exit /b 0
 
@@ -30,7 +30,7 @@ exit /b 0
 :missingNode
 echo Source edition: Node.js LTS is required.
 echo For direct use, download the Windows portable ZIP and extract ALL files.
-echo Then double-click MoonlitPet.exe. No Node.js installation is needed.
+echo Then double-click ClaudePet.exe. No Node.js installation is needed.
 goto failed
 
 :incomplete

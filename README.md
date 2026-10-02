@@ -1,6 +1,6 @@
 # DeepSeek Whale Desktop Pet
 
-![DeepSeek whale desktop pet preview](assets/readme-preview.png)
+<img src="assets/character-transparent.png" alt="DeepSeek whale-girl desktop pet" width="280">
 
 A lightweight Windows 10/11 Electron desktop pet featuring a DeepSeek-inspired whale character. The app uses a borderless transparent window that stays on top and can be dragged around the desktop. Click or double-click the character for local lines and visual feedback; click the small whale for another interaction. Right-click the character or use the system tray to manage settings and exit.
 
@@ -16,7 +16,7 @@ A lightweight Windows 10/11 Electron desktop pet featuring a DeepSeek-inspired w
 
 ## Run the portable build
 
-Download the `DeepSeekPet.zip` release, extract the complete archive to a normal folder, and launch `DeepSeekPet.exe` or `启动桌宠.cmd`. The portable build supports Windows 10/11 x64 and does not require Node.js, npm, or Electron. Keep the extracted folder together and do not run the executable from inside the ZIP preview.
+Download the [DeepSeekPet.zip Windows portable release](https://github.com/DaledLx/Desktop-pet/releases/download/DeepSeek-v1-20261002/DeepSeekPet.zip), extract the complete archive to a normal folder, and launch `DeepSeekPet.exe` or `启动桌宠.cmd`. The portable build supports Windows 10/11 x64 and does not require Node.js, npm, or Electron. Keep the extracted folder together and do not run the executable from inside the ZIP preview.
 
 ## Run from source
 

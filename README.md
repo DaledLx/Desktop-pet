@@ -1,74 +1,63 @@
-# Claude 桌宠
+# Claude Desktop Pet
 
-![Claude 桌宠预览](assets/claude-preview.png)
+![Claude desktop pet preview](assets/claude-preview.png)
 
-一个面向 Windows 10/11 的轻量 Electron 桌面宠物。使用用户提供的 Claude 娘化立绘，默认置顶、无边框、透明窗口，可拖动。点击或双击角色显示本地台词，点击书签形的“档案”按钮可查看角色设定；右键打开设置菜单，系统托盘可恢复鼠标穿透或退出。
+A lightweight Windows 10/11 Electron desktop pet featuring a warm, book-loving Claude character. The app uses a borderless transparent window that stays on top and can be dragged around the desktop. Click or double-click Claude for local lines and visual feedback; the profile button opens her character information. Right-click Claude or use the system tray to manage settings and exit.
 
-## 角色设定
+## Character
 
-- **名字：** Claude · 克劳德。
-- **外貌：** 橙色长发、琥珀色眼睛，手持书本，奶油白长裙搭配黑色、陶土橙饰边与花饰。
-- **性格：** 温和知性、耐心细致、好奇诚实，喜欢阅读、写作和梳理思路。
-- **互动：** 点击听一句读书与陪伴主题的短句；双击触发书签主题台词和暖色星光；保持轻微呼吸动作。
+- **Name:** Claude
+- **Style:** Orange hair, amber eyes, a book, and a cream outfit with black and terracotta accents
+- **Personality:** Gentle, thoughtful, patient, curious, and honest
+- **Interactions:** Reading and companionship lines, bookmark-themed double-click feedback, and a subtle breathing animation
 
-界面采用暖橙与奶油白配色。角色资料、本地台词与 AI 对话人设统一维护在 `src/character.js`。此形象是用户指定的角色设定；实际使用哪家供应商、哪个模型，由“模型设置”决定，换装不会自动更换 API、模型或密钥。
+The character profile, local lines, and AI persona are maintained in `src/character.js`.
 
-## 启动
+## Features
 
-### 普通用户：Windows 便携版
+- Transparent, borderless, always-on-top desktop window
+- Draggable character with subtle breathing animation
+- Local speech bubble and profile panel
+- Small, medium, and large display sizes with saved preferences
+- Optional OpenAI-compatible chat through a configurable model endpoint
+- Secure API-key storage through Electron `safeStorage` when supported by Windows
 
-下载 `ClaudePet-win-x64-*.zip`，先完整解压到普通文件夹，再双击 `ClaudePet.exe`（也可双击同目录的 `启动桌宠.cmd`）。支持 Windows 10/11 x64，不需要安装 Node.js、npm 或 Electron，基础桌宠可离线启动。AI 对话仍需网络和用户自行配置 API。
+## Run the portable build
 
-请保留整个目录：不要只复制 EXE，不要直接在 ZIP 预览里运行。退出请使用角色右键菜单或系统托盘的“退出桌宠”。程序启动不依赖终端，关闭启动窗口不会退出桌宠。
+Download the `ClaudePet-win-x64-*.zip` release, extract the complete archive to a normal folder, and launch `ClaudePet.exe` or `启动桌宠.cmd`. The portable build supports Windows 10/11 x64 and does not require Node.js, npm, or Electron. Keep the extracted folder together and do not run the executable from inside the ZIP preview.
 
-### 开发者：源码版
+## Run from source
 
-源码 ZIP 不附带运行环境，需要先安装 Node.js LTS（建议 22 或更新版本）。在项目目录执行：
+Install Node.js LTS (Node.js 22 or newer is recommended), then run:
 
 ```powershell
 npm.cmd install
 npm.cmd start
 ```
 
-也可以双击项目根目录的 `启动桌宠.cmd`。如果源码包中没有 `node_modules`，它会先执行 `npm ci` 安装锁定的依赖；没有 Node.js 或安装失败时会保留错误提示，不会直接闪退。
-
-若 Electron 下载源连接不稳定，可在 PowerShell 先设置镜像：`$env:ELECTRON_MIRROR='https://npmmirror.com/mirrors/electron/'`，再执行 `npm install`。
-
-开发检查：
+You can also launch `启动桌宠.cmd`. Useful checks:
 
 ```powershell
 npm.cmd run check
 npm.cmd test
 ```
 
-## 构建 Windows 便携版
+## Build a Windows portable package
 
-在 Windows 开发电脑安装依赖后执行 `npm.cmd run build:win`。构建先运行语法检查和测试，再使用已安装的 Electron 运行环境生成 `dist/ClaudePet-win-<架构>-<编号>/` 和同名 ZIP。打包本身无需额外下载工具；架构来自 Electron 可执行文件，当前提供的是 x64 版。
+After installing dependencies on Windows, run:
 
-打包脚本只复制明确列出的应用文件及 Electron 运行环境，保留 Electron/Chromium 许可证，不包含本机设置、密钥、测试数据、日志、旧 ZIP 或整个工作区。每次构建生成新目录，避免覆盖已有产物。可向普通用户分发该便携 ZIP；向开发者发布源码时应同时包含 `scripts/` 和 `tests/`。
+```powershell
+npm.cmd run build:win
+```
 
-这是未签名的便携程序，不是安装器。开机启动绑定当前位置，启用后请保持目录位置不变。
+The build runs syntax checks and tests, then creates an x64 portable directory and ZIP under `dist/`.
 
-## 操作
+## Configure AI chat
 
-- 左键拖动角色移动窗口；角色会做幅度很小的呼吸起伏。
-- 点击角色显示一条本地台词，双击会触发特别台词和星光反馈。
-- 本地台词在独立的小气泡窗口中显示，优先居中放在角色头顶上方并留出间距；紧贴屏幕顶部时改放头部旁边，不遮挡脸部。约 5.6 秒后消失，拖动时跟随角色，隐藏桌宠时一起隐藏，且不会抢走键盘焦点。
-- 点击角色旁边的“档案”按钮，查看外貌、性格与爱好；点击 `×`、弹窗外部或按 `Esc` 关闭。键盘聚焦角色后按 Enter 或 Space 也可互动。
-- 右键菜单：模型设置、保持置顶、鼠标穿透、开机启动、退出桌宠。
-- 右键和托盘菜单都提供“小 / 中 / 大”三档大小，选择会保存到本地。
-- 托盘菜单：显示/隐藏、保持置顶、鼠标穿透、开机启动、退出。
-- 右键或托盘菜单中的“模型设置”可填写 OpenAI 兼容接口地址和 API 密钥，点击“拉取模型”后从接口返回的模型列表中选择名称；保存后，在角色脚下输入问题并点击“发送”即可对话。
-- 模型回答会显示在独立的大型面板中，标题为所选模型名称，不会自动消失；打开时窗口会向左扩展，面板位于角色左侧，不遮挡立绘。点击右上角 `×` 或按 `Esc` 可手动关闭。角色自身的短台词仍使用原来的小气泡。
-- 鼠标穿透打开后，无法在角色上右键；从系统托盘取消“鼠标穿透”即可恢复。
-- 窗口位置和设置保存于 Electron 的用户数据目录，默认开机启动关闭。
+Open **Model settings** from the right-click or tray menu. Enter an OpenAI-compatible Base URL or a complete `/chat/completions` or `/responses` endpoint, add your API key, fetch the available models, and select one. Type a question in the input below Claude and send it. Responses remain in a separate panel until you close it.
 
-升级前先退出旧版，再启动新版。本项目保留原来的内部应用标识 `moonlit-desktop-pet`，因此同一台电脑会沿用已有的位置、大小及 API 配置。若之前启用了开机启动，移动到新便携目录后，请在新版中重新关闭再开启一次，以更新启动位置。
+The app sends model requests from Electron's main process. It does not include a provider key or personal settings in the repository. Use only API services and content you are authorized to use.
 
-模型请求由 Electron 主进程发出，渲染页面只通过 IPC 传递对话内容。Windows 支持时，API 密钥使用 Electron `safeStorage` 加密后保存；对话会发送到你填写的接口，应用不会调用在线 AI 以外的本地台词服务。
+## License
 
-接口地址可以填写供应商提供的 Base URL（例如 `https://example.com/v1`），也可以填写完整的 `/chat/completions` 或 `/responses` 地址。应用按地址使用对应请求格式；标准 Chat Completions 路径明确返回路由不存在（HTTP 400/404/405）时，会在同一服务尝试一次 Responses 路径。认证失败、模型不可用、限流及网络错误不会触发重试。不支持这两种格式的供应商需要提供兼容接口。
-
-如果显示“无法连接模型服务”，检查所填域名的 DNS、网络和代理设置。如果显示 `No gateway route matched`，检查接口地址和供应商支持的路径；该错误本身不能确认密钥是否有效。HTTP 401/403 通常需要检查密钥和访问权限。
-
-源码不包含个人 API 密钥或固定的第三方服务配置。每位使用者在“模型设置”中自行填写地址、密钥并选择模型。本机设置位于 Electron 用户数据目录，不在项目内；发布源码时不要包含个人设置、`.env`、日志或旧压缩包。`.gitignore` 已排除这些常见文件。旧 ZIP 不会随源码修改自动更新。
+See [LICENSE](LICENSE) for the project license and third-party notices.

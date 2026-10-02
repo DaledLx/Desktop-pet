@@ -10,8 +10,8 @@ const defaultState = {
   ignoreMouseEvents: false,
   openAtLogin: false,
   size: 'medium',
-  apiEndpoint: 'https://api.openai.com/v1/chat/completions',
-  apiModel: 'gpt-4o-mini',
+  apiEndpoint: 'https://api.deepseek.com/v1/chat/completions',
+  apiModel: 'deepseek-chat',
   apiKeyEncrypted: '',
 };
 
@@ -81,10 +81,10 @@ function notifyState() {
 
 function makeTrayIcon() {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
-    <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dcd6ff"/><stop offset="1" stop-color="#8c7fd9"/></linearGradient></defs>
-    <path d="M32 6 39 17l13 3-9 10 2 14-13-6-13 6 2-14-9-10 13-3Z" fill="url(#g)" stroke="#514b83" stroke-width="2"/>
-    <circle cx="25" cy="31" r="3" fill="#514b83"/><circle cx="39" cy="31" r="3" fill="#514b83"/>
-    <path d="M25 40c4 3 10 3 14 0" fill="none" stroke="#514b83" stroke-width="2" stroke-linecap="round"/>
+    <defs><linearGradient id="w" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8fd0f5"/><stop offset="1" stop-color="#2a6fd0"/></linearGradient></defs>
+    <path d="M32 20c11 0 19 6 19 12 0 6-8 12-19 12-7 0-13-3-16-7-2 3-4 5-7 6-1 0-2-8 3-14 3-5 11-9 20-9Z" fill="url(#w)" stroke="#14395f" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M33 17v-6" fill="none" stroke="#14395f" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="45" cy="28" r="2.6" fill="#0d2740"/>
   </svg>`;
   return nativeImage.createFromDataURL(`data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`);
 }
@@ -114,7 +114,12 @@ function setOpenAtLogin(value) {
 
 function applyLoginItemSettings() {
   const options = { openAtLogin: state.openAtLogin };
-  if (process.defaultApp && process.argv[1]) {
+  const portable = process.defaultApp ? null : path.join(path.dirname(process.execPath), '启动桌宠.cmd');
+  if (portable && fs.existsSync(portable)) {
+    // The portable launcher resolves the app directory itself, which keeps
+    // autostart working when the folder is renamed or moved on disk.
+    options.path = portable;
+  } else if (process.defaultApp && process.argv[1]) {
     options.path = process.execPath;
     options.args = [path.resolve(process.argv[1])];
   }
@@ -360,7 +365,7 @@ function createWindow() {
 
 function createTray() {
   tray = new Tray(makeTrayIcon());
-  tray.setToolTip('月影桌宠');
+  tray.setToolTip('DeepSeek 桌宠');
   tray.on('click', () => {
     if (!mainWindow || mainWindow.isDestroyed()) return;
     mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();

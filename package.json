@@ -1,7 +1,7 @@
 {
-  "name": "moonlit-desktop-pet",
+  "name": "deepseek-desktop-pet",
   "version": "1.0.0",
-  "description": "A gentle Windows desktop pet inspired by the supplied character reference.",
+  "description": "A DeepSeek whale-girl desktop pet for Windows 10/11.",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",

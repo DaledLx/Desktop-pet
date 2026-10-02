@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>月影桌宠</title>
+    <title>DeepSeek 桌宠</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="pet-stage" aria-label="月影桌宠">
+    <main class="pet-stage" aria-label="DeepSeek 桌宠">
       <div class="speech" role="status" aria-live="polite"></div>
       <section class="model-chat" id="model-chat" hidden role="dialog" aria-modal="false" aria-labelledby="model-chat-title">
         <header class="model-chat-header">
           <div>
             <p class="model-chat-kicker">模型回答</p>
-            <h2 id="model-chat-title">gpt-4o-mini</h2>
+            <h2 id="model-chat-title">deepseek-chat</h2>
           </div>
           <button class="close-button model-chat-close" id="model-chat-close" type="button" aria-label="关闭模型回答">×</button>
         </header>
@@ -22,13 +22,13 @@
       </section>
       <div class="pet-wrap">
         <div class="art-frame">
-          <img class="pet" src="../assets/character-transparent.png" alt="银白长发、淡紫色眼睛、白色角与蝠翼的月影桌宠" draggable="false" tabindex="0" />
+          <img class="pet" src="../assets/character-transparent.png" alt="深蓝色长发、鲸鳍耳朵与鲸尾、穿深蓝围裙的 DeepSeek 鲸鱼娘桌宠" draggable="false" tabindex="0" />
         </div>
-        <button class="cloud" type="button" aria-label="和小云朵互动"><span></span><span></span><span></span></button>
+        <button class="whale" type="button" aria-label="和小鲸鱼互动">🐳</button>
       </div>
       <div class="sparkles" aria-hidden="true"></div>
       <form class="chat-input" id="chat-form">
-        <input id="chat-input" name="message" type="text" maxlength="500" autocomplete="off" placeholder="在这里问她……" aria-label="输入要对桌宠说的话" />
+        <input id="chat-input" name="message" type="text" maxlength="500" autocomplete="off" placeholder="把问题丢给它……" aria-label="输入要对桌宠说的话" />
         <button id="chat-send" type="submit" aria-label="发送消息">发送</button>
       </form>
       <div class="status">右键打开菜单</div>
@@ -37,7 +37,7 @@
       <section class="settings-dialog" role="dialog" aria-modal="true" aria-labelledby="settings-title">
         <div class="settings-heading">
           <div>
-            <p class="settings-kicker">月影桌宠</p>
+            <p class="settings-kicker">DeepSeek 桌宠</p>
             <h1 id="settings-title">模型设置</h1>
           </div>
           <button class="close-button" id="settings-close" type="button" aria-label="关闭设置">×</button>

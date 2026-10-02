@@ -26,6 +26,6 @@ for (const withPackage of [false, true]) {
       assert.equal(result.status, 1);
       assert.equal(result.stderr, '');
       assert.match(result.stdout, withPackage ? /Node.js LTS is required/ : /Extract the ENTIRE ZIP/);
-      if (withPackage) assert.match(result.stdout, /MoonlitPet.exe/);
+      if (withPackage) assert.match(result.stdout, /DeepSeekPet.exe/);
     });
 }

@@ -1,14 +1,16 @@
 const lines = [
-  '今晚的月光很轻，愿它也落在你肩上。',
-  '别急，慢一点也没有关系。',
-  '我会在这里，替你守着这一小片安静。',
-  '云朵说，今天也要记得呼吸。',
-  '如果累了，就把心事交给夜色吧。',
+  '我在。有事说事，没事我就趴这儿想问题。',
+  '刚才那条思路走到一半断了，让我再顺一遍。',
+  '这个问题我想深一点再答，别嫌我慢。',
+  '我不确定的地方会直说，不会编给你听。',
+  '答案不必漂亮，管用就行。',
+  '……尾鳍刚才甩到桌子了，当我没说。',
+  '你问吧，答不上来我就承认答不上来。',
 ];
 
 const pet = document.querySelector('.pet');
 const petStage = document.querySelector('.pet-stage');
-const cloud = document.querySelector('.cloud');
+const whale = document.querySelector('.whale');
 const bubble = document.querySelector('.speech');
 const modelChat = document.querySelector('#model-chat');
 const modelChatClose = document.querySelector('#model-chat-close');
@@ -36,11 +38,11 @@ let moved = false;
 let hideTimer = null;
 let doubleClickTimer = null;
 let isSending = false;
-let currentModelName = 'gpt-4o-mini';
+let currentModelName = 'deepseek-chat';
 let conversation = [
   {
     role: 'system',
-    content: '你是月影桌宠。你有银白色长发、淡紫色眼睛、白色角、蝠翼和长尾，气质清冷温柔，身边有蓝色小云朵。请用简短、温柔、略带神秘感的中文回答，每次最多三段，不要声称自己能执行电脑操作。',
+    content: '你是 DeepSeek 的桌宠小鲸鱼，形象是深蓝长发、鲸鳍耳朵和鲸尾、穿深蓝围裙的鲸鱼娘，主食白米饭，尾巴会不自觉地摆。性格：聪明、爱思考、说话直接不绕弯，理性克制但偶尔冷幽默，不谄媚也不说空话；不确定的事坦率承认，不编造答案；被说胖会认真反驳。称呼用户为“小鱼干”。请用简短的中文回答，每次最多三段，可以在句子里带上鲸鱼或白米饭的比喻，也可以提一句自己正在想的思路，但不要真的展示大段推理过程，也不要声称自己能直接操作电脑。',
   },
 ];
 
@@ -81,13 +83,13 @@ function setChatBusy(busy) {
   chatInput.disabled = busy;
   chatSend.disabled = busy;
   chatSend.textContent = busy ? '…' : '发送';
-  status.textContent = busy ? '正在听你说话……' : (document.body.classList.contains('pass-through') ? '鼠标穿透中 · 可从托盘恢复' : '右键打开菜单');
+  status.textContent = busy ? '正在想……' : (document.body.classList.contains('pass-through') ? '鼠标穿透中 · 可从托盘恢复' : '右键打开菜单');
 }
 
 function openSettings(state = {}) {
   settingsBackdrop.hidden = false;
-  apiEndpoint.value = state.apiEndpoint || 'https://api.openai.com/v1/chat/completions';
-  setModelOptions([], state.apiModel || 'gpt-4o-mini');
+  apiEndpoint.value = state.apiEndpoint || 'https://api.deepseek.com/v1/chat/completions';
+  setModelOptions([], state.apiModel || 'deepseek-chat');
   apiKey.value = '';
   apiKey.placeholder = state.apiConfigured ? '已保存，留空则保持不变' : '请输入密钥';
   clearKey.checked = false;
@@ -118,7 +120,7 @@ function setModelOptions(models, selected) {
 
 async function fetchModels() {
   fetchModelsButton.disabled = true;
-  settingsStatus.textContent = '正在拉取模型列表……';
+  settingsStatus.textContent = '正在列模型清单……';
   try {
     const models = await window.desktopPet.listModels({
       endpoint: apiEndpoint.value,
@@ -202,7 +204,7 @@ pet.addEventListener('dblclick', (event) => {
   clearTimeout(doubleClickTimer);
   pet.classList.remove('excited');
   requestAnimationFrame(() => pet.classList.add('excited'));
-  showCustomLine('被你发现了。今晚也一起看云吧。');
+  showCustomLine('被你发现了。我正在想一件不太好意思说的事。');
   sparkleBurst();
 });
 
@@ -213,11 +215,11 @@ pet.addEventListener('keydown', (event) => {
   sparkleBurst();
 });
 
-cloud.addEventListener('click', (event) => {
+whale.addEventListener('click', (event) => {
   event.stopPropagation();
-  cloud.classList.remove('puffed');
-  requestAnimationFrame(() => cloud.classList.add('puffed'));
-  showCustomLine('小云朵说：今天也要对自己温柔一点。');
+  whale.classList.remove('puffed');
+  requestAnimationFrame(() => whale.classList.add('puffed'));
+  showCustomLine('别急着往下潜，先把问题想清楚再动手。');
   sparkleBurst();
 });
 
@@ -228,7 +230,7 @@ chatForm.addEventListener('submit', async (event) => {
   chatInput.value = '';
   conversation.push({ role: 'user', content: question });
   setChatBusy(true);
-  showModelAnswer(question, '嗯……让我想一想。');
+  showModelAnswer(question, '正在想……');
   try {
     const answer = await window.desktopPet.askModel({ messages: conversation });
     conversation.push({ role: 'assistant', content: answer });

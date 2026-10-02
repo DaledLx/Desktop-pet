@@ -16,9 +16,9 @@ if (!arch) throw new Error('无法识别 Electron 的 Windows 架构。');
 // Every build has its own directory; never copy the workspace or a user profile.
 const dist = path.join(root, 'dist');
 fs.mkdirSync(dist, { recursive: true });
-const destination = fs.mkdtempSync(path.join(dist, `MoonlitPet-win-${arch}-`));
+const destination = fs.mkdtempSync(path.join(dist, `DeepSeekPet-win-${arch}-`));
 fs.cpSync(runtime, destination, { recursive: true });
-fs.renameSync(path.join(destination, 'electron.exe'), path.join(destination, 'MoonlitPet.exe'));
+fs.renameSync(path.join(destination, 'electron.exe'), path.join(destination, 'DeepSeekPet.exe'));
 fs.unlinkSync(path.join(destination, 'resources', 'default_app.asar'));
 const appDir = path.join(destination, 'resources', 'app');
 fs.mkdirSync(appDir, { recursive: true });
@@ -37,9 +37,9 @@ fs.writeFileSync(path.join(appDir, 'package.json'), JSON.stringify({ name, versi
 fs.copyFileSync(path.join(root, '启动桌宠.cmd'), path.join(destination, '启动桌宠.cmd'));
 fs.copyFileSync(path.join(root, 'README.md'), path.join(destination, 'README.md'));
 fs.writeFileSync(path.join(destination, '使用说明.txt'), '\uFEFF' + [
-  '月影桌宠 · Windows 便携版', '',
+  'DeepSeek 桌宠 · Windows 便携版', '',
   '1. 先把整个 ZIP 解压到普通文件夹，不要在压缩包预览中直接运行。',
-  '2. 双击 MoonlitPet.exe。无需安装 Node.js 或 npm，无需下载启动依赖。',
+  '2. 双击 DeepSeekPet.exe。无需安装 Node.js 或 npm，无需下载启动依赖。',
   '3. 不要只复制 EXE；它需要同目录的 resources、locales、DLL 等文件。',
   '4. 退出：右键角色或系统托盘图标，选择“退出桌宠”。',
   '5. AI 对话需要网络，在“模型设置”中填写自己的地址、密钥并选择模型。',

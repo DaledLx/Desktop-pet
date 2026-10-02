@@ -4,7 +4,12 @@
 
 A lightweight Windows 10/11 Electron desktop pet featuring a DeepSeek-inspired whale character. The app uses a borderless transparent window that stays on top and can be dragged around the desktop. Click or double-click the character for local lines and visual feedback; click the small whale for another interaction. Right-click the character or use the system tray to manage settings and exit.
 
-## Features
+## Character
+
+- **Name:** DeepSeek
+- **Style:** A whale-girl with deep-blue hair, fin-like ears, and a whale tail, accompanied by a little whale
+- **Personality:** Thoughtful, straightforward, and curious; she takes time to reason things through, admits when she is unsure, and values useful answers
+- **Interactions:** Reflective lines when clicked, a special double-click response, a little whale interaction, and a subtle breathing animation`r`n`r`n## Features
 
 - Transparent, borderless, always-on-top desktop window
 - Draggable character with subtle breathing animation
@@ -57,3 +62,5 @@ The whale-girl artwork is a community creation based on the original character â
 ## License
 
 See [LICENSE](LICENSE) for the project license and third-party notices.
+
+

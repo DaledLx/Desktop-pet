@@ -16,7 +16,7 @@ A lightweight Windows 10/11 Electron desktop pet inspired by the Moonlit Astra c
 
 ## Run the portable build
 
-Download the `MoonlitPet-win-x64-*.zip` release, extract the complete archive to a normal folder, and launch `MoonlitPet.exe` or `启动桌宠.cmd`. The portable build supports Windows 10/11 x64 and does not require Node.js, npm, or Electron. Keep the extracted folder together and do not run the executable from inside the ZIP preview.
+Download the `MoonlitPet-win-x64.zip` release, extract the complete archive to a normal folder, and launch `MoonlitPet.exe` or `启动桌宠.cmd`. The portable build supports Windows 10/11 x64 and does not require Node.js, npm, or Electron. Keep the extracted folder together and do not run the executable from inside the ZIP preview.
 
 ## Run from source
 
